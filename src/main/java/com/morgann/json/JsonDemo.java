@@ -49,6 +49,25 @@ public class JsonDemo {
         System.out.println("location : " + root.get("location").asText());
         System.out.println("conference : " + root.get("conference").asText());
         System.out.println("division : " + root.get("division").asText());
+
+        // Lecture JSON sans objet avec readTree
+        System.out.println("-------- Lecture JSON sans objet avec readTree -----------");
+        String json = "{\"name\":{\"fr\":\"Libellé français\",\"de\":\"Libellé allemand\",\"en\":\"Libellé anglais\"}}";
+        root = objectMapper.readTree(json);
+        JsonNode node = root.get("name");
+        if (node.get("fr")!=null)
+            System.out.println("Libellé français : " + node.get("fr").asText());
+        if (node.get("en")!=null)
+            System.out.println("Libellé anglais : " + node.get("en").asText());
+
+        String json2 = "{\"name\":{\"fr\":\"Libellé français\",\"de\":\"Libellé allemand\",\"en\":\"Libellé anglais\"}"
+                + "," + "\"shortname\":{\"fr\":\"Court français\",\"de\":\"Court allemand\"}}";
+        root = objectMapper.readTree(json2);
+        node = root.get("shortname");
+        if (node.get("fr")!=null)
+            System.out.println("Libellé français court : " + node.get("fr").asText());
+        System.out.println("Libellé anglais court : " + (node.get("en")!=null ? node.get("en").asText() : "(absent)"));
+
     }
 
 }
